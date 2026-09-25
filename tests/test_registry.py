@@ -1,5 +1,6 @@
-from model_registry import *
 import pytest
+
+from model_registry import Model, Registry, RegistryError, Status
 
 
 def test_lifecycle():
