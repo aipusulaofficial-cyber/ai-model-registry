@@ -11,7 +11,7 @@ class Registry:
   k=(m.name,m.version)
   if k in self.models:raise RegistryError("duplicate version")
   self.models[k]=m
- def transition(self,k,target):
+ def rollback(self,k,target=Status.VALIDATED):\n  m=self.models[k]\n  if m.status is not Status.DEPLOYED or target is not Status.VALIDATED:raise RegistryError("rollback requires deployed model and validated target")\n  self.models[k]=Model(m.name,m.version,m.artifact,target);return self.models[k]\n def transition(self,k,target):
   m=self.models[k];allowed={Status.DRAFT:{Status.VALIDATED},Status.VALIDATED:{Status.DEPLOYED},Status.DEPLOYED:{Status.RETIRED},Status.RETIRED:set()}
   if target not in allowed[m.status]:raise RegistryError("invalid lifecycle transition")
   self.models[k]=Model(m.name,m.version,m.artifact,target);return self.models[k]
