@@ -1,10 +1,10 @@
 """Model registry with immutable versions and lifecycle guards."""
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 
-class Status(str, Enum):
+class Status(StrEnum):
     DRAFT = "draft"
     VALIDATED = "validated"
     DEPLOYED = "deployed"
