@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: ai-model-registry}
+spec:
+ replicas: 2
+ selector: {matchLabels: {app: ai-model-registry}}
+ template:
+  metadata: {labels: {app: ai-model-registry}}
+  spec:
+   containers:
+   - name: api
+     image: ai-model-registry:latest
+     ports: [{containerPort: 8000}]
+     readinessProbe: {httpGet: {path: /health/ready, port: 8000}}
+     livenessProbe: {httpGet: {path: /health/live, port: 8000}}
