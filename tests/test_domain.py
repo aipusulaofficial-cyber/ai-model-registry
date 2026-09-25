@@ -1,4 +1,4 @@
-from registry_domain import *
+from registry_domain import Lifecycle, Version, verify_digest
 
 
 def test_transition():
