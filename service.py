@@ -36,9 +36,7 @@ def ready():
 def handle(r: Request):
     with tracer.start_as_current_span("ai-model-registry.domain"):
         try:
-            v = Version(
-                r.key, r.payload.get("version", "1"), r.payload.get("digest", "")
-            )
+            v = Version(r.key, r.payload.get("version", "1"), r.payload.get("digest", ""))
             return {"model": v.model, "version": v.version, "lifecycle": v.lifecycle}
         except (ValueError, KeyError, RuntimeError) as e:
             raise HTTPException(status_code=400, detail=str(e)) from e
