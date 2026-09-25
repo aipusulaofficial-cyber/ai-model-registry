@@ -1,4 +1,5 @@
 """Model registry with immutable versions and lifecycle guards."""
+
 from dataclasses import dataclass
 from enum import Enum
 
