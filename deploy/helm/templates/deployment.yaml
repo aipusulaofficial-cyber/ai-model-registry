@@ -7,12 +7,24 @@ spec:
  template:
   metadata: {labels: {app: {{ .Chart.Name }}}}
   spec:
-   securityContext: {runAsNonRoot: true, runAsUser: 10001}
+   securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    seccompProfile:
+     type: RuntimeDefault
    containers:
    - name: api
      image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
      imagePullPolicy: {{ .Values.image.pullPolicy }}
      ports: [{containerPort: 8000}]
+     securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+       drop: [ALL]
+      seccompProfile:
+       type: RuntimeDefault
      resources: {{- toYaml .Values.resources | nindent 6 }}
      readinessProbe: {httpGet: {path: /health/ready, port: 8000}, initialDelaySeconds: 5, periodSeconds: 10}
      livenessProbe: {httpGet: {path: /health/live, port: 8000}, initialDelaySeconds: 10, periodSeconds: 20}
