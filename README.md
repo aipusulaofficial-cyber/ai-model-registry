@@ -1,29 +1,31 @@
 # AI Model Registry
 
-**Principal-level reference implementation** focused on model metadata, lifecycle state, validation contracts, provenance, and controlled promotion.
+A model lifecycle service for validated metadata, provenance, explicit state transitions and controlled promotion.
 
-## Engineering intent
-- Clear domain boundaries and replaceable infrastructure adapters
-- Explicit contracts, validation, and failure semantics
-- Deterministic tests with external dependencies isolated
-- Operational readiness through health checks, CI, and security validation
-- Architecture decisions documented so trade-offs are reviewable
+## Lifecycle
+```text
+model artifact + metadata
+        -> validation
+        -> registered version
+        -> lifecycle state
+        -> promotion decision
+        -> deployment consumer
+```
 
-## System design
-The repository is structured around explicit responsibilities rather than framework-driven coupling. Domain policy, orchestration, infrastructure adapters, and operational concerns remain separable so components can evolve independently.
+## Core contracts
+- Model metadata is validated before registration.
+- Versions are immutable references for lifecycle decisions.
+- Provenance links a model to its source and validation context.
+- Promotion is a state transition with explicit preconditions.
+- Invalid transitions are rejected rather than silently coerced.
 
-## Quality bar
-- **Correctness:** contract, edge-case, and failure-path tests
-- **Reliability:** bounded work, explicit failure behavior, and health signals where applicable
-- **Security:** least-privilege boundaries, input validation, and safe defaults
-- **Observability:** correlation/context propagation and actionable operational signals
-- **Delivery:** reproducible CI validation before changes are considered complete
+## Runtime
+The container runs non-root and exposes health probes. Helm deployment templates define non-root security context, versioned image references, resources, readiness and liveness checks.
 
-## Principal engineering contract
-See [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) for the reviewable engineering contract, NFRs, and change-safety checklist.
+## Verification
+CI, dependency auditing and production tests validate lifecycle behavior and deployment assumptions.
 
-## Architecture & decisions
-See [ARCHITECTURE.md](ARCHITECTURE.md) and the ADRs directory for system boundaries, key trade-offs, and extension points.
+## Evidence
+[ARCHITECTURE.md](ARCHITECTURE.md) · [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) · [ADRs](ADRs/)
 
-## Engineering principle
-The goal is to make important behavior **explicit, testable, observable, auditable, and replaceable** without adding complexity that does not buy a measurable engineering property.
+The registry is intentionally lifecycle-oriented: storing an artifact is not the same thing as approving it for promotion.
