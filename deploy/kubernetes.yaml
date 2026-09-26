@@ -1,15 +1,46 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: {name: ai-model-registry}
+metadata:
+  name: ai-model-registry
 spec:
- replicas: 2
- selector: {matchLabels: {app: ai-model-registry}}
- template:
-  metadata: {labels: {app: ai-model-registry}}
-  spec:
-   containers:
-   - name: api
-     image: ai-model-registry:latest
-     ports: [{containerPort: 8000}]
-     readinessProbe: {httpGet: {path: /health/ready, port: 8000}}
-     livenessProbe: {httpGet: {path: /health/live, port: 8000}}
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ai-model-registry
+  template:
+    metadata:
+      labels:
+        app: ai-model-registry
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: api
+          image: ai-model-registry:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8000
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 8000
