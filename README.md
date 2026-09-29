@@ -29,3 +29,6 @@ CI, dependency auditing and production tests validate lifecycle behavior and dep
 [ARCHITECTURE.md](ARCHITECTURE.md) · [docs/PRINCIPAL-ENGINEERING.md](docs/PRINCIPAL-ENGINEERING.md) · [ADRs](ADRs/)
 
 The registry is intentionally lifecycle-oriented: storing an artifact is not the same thing as approving it for promotion.
+
+## Portfolio evidence
+[Portfolio evidence map](docs/PORTFOLIO_EVIDENCE.md) — executable proof, architecture mapping and reviewable CI evidence.
