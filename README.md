@@ -1,5 +1,10 @@
 # AI Model Registry
 
+[![CI](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/ci.yml)
+[![Production Tests](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/production-tests.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/production-tests.yml)
+[![Supply Chain](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/supply-chain.yml/badge.svg?branch=main)](https://github.com/aipusulaofficial-cyber/ai-model-registry/actions/workflows/supply-chain.yml)
+
+
 A model lifecycle service for validated metadata, provenance, explicit state transitions and controlled promotion.
 
 ## Lifecycle
