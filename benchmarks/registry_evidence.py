@@ -6,7 +6,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from registry_domain import Lifecycle, Version, verify_digest
 
-v = Version("evidence", "1", "sha256:abc")
+v = Version("evidence", "1", "a" * 64)
 path = []
 for x in (Lifecycle.VALIDATED, Lifecycle.STAGED, Lifecycle.PRODUCTION):
     v.transition(x)
