@@ -8,6 +8,6 @@ def test_http_contract_and_domain():
     assert c.get("/health/live").status_code == 200
     r = c.post(
         "/v1/registry",
-        json={"key": "integration", "payload": {"version": "1", "digest": "sha"}},
+        json={"key": "integration", "payload": {"version": "1", "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}},
     )
     assert r.status_code == 200, r.text
